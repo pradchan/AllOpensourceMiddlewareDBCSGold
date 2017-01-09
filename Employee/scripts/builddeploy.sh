@@ -1,12 +1,12 @@
 #!/bin/bash
-config_file="EmployeePHP/scripts/config.properties"
+config_file="Employee/scripts/config.properties"
 while IFS='=' read -r key value
 do
   key=$(echo $key | tr '.' '_')
   eval "${key}='${value}'"
 done < "$config_file"
 
-cat <<EOF >EmployeePHP/deployment.json
+cat <<EOF >Employee/deployment.json
 {
     "memory": "2G",
     "instances": "1",
@@ -20,11 +20,6 @@ cat <<EOF >EmployeePHP/deployment.json
 }
 EOF
 
-cd EmployeePHP
-mkdir -p target
-zip target/Employees-dist.zip *.php *.png manifest.json *.html
-cd ..
-
 echo "Starting the deployment process...."
 
 echo "Creating a storage container..."
@@ -37,7 +32,7 @@ echo "Uploading the ZIP file in Storage Container..."
 curl -i -X PUT \
     -u ${cloud_username}:${cloud_password} \
     https://${cloud_domain}.storage.oraclecloud.com/v1/Storage-${cloud_domain}/employees-service/EmployeesService.zip \
-    -T EmployeePHP/target/Employees-dist.zip
+    -T Employee/Employees-dist.zip
 sleep 15
 
 # See if application already exists
@@ -67,7 +62,7 @@ else
         -H "X-ID-TENANT-NAME:${cloud_domain}" \
         -H "Content-Type: multipart/form-data" \
         -F "name=EmployeesService" -F "runtime=php" -F "subscription=Monthly" \
-        -F "deployment=@EmployeePHP/deployment.json" \
+        -F "deployment=@Employee/deployment.json" \
         -F "archiveURL=employees-service/EmployeesService.zip" -F "notes=Employees Service deploying..."  \
         ${cloud_paas_rest_url}/paas/service/apaas/api/v1.1/apps/${cloud_domain}
 	sleep 60
