@@ -27,7 +27,7 @@ if test "${dbviewoutput#*$dbname}" != "$dbviewoutput"
 		sed -i 's/CLOUD_USER/'$cloud_username'/' Operations/src/create-dbcs-img.json
 		sed -i 's/CLOUD_PASSWORD/'$cloud_password'/' Operations/src/create-dbcs-img.json
 		sed -i 's/DBAAS_ADMIN_PASSWORD/'$DBAAS_ADMIN_PASSWORD'/' Operations/src/create-dbcs-img.json
-		sed -i 's#PUBLIC_KEY#'$publickey'#' Operations/src/create-dbcs-img.json
+		sed -i 's|PUBLIC_KEY|'$publickey'|' Operations/src/create-dbcs-img.json
 		
 		python Operations/src/opc-dbcs.py -i ${cloud_domain} -u ${cloud_username} -p ${cloud_password} -o BUILD -w Operations/src/opc-dbcs-ws.ref -l Operations/opc_dbcs.log -c Operations/src/cacert.pem -d Operations/src/create-dbcs-img.json
 fi
