@@ -1,5 +1,5 @@
 #!/bin/bash
-config_file="Employee/scripts/config.properties"
+config_file="Operations/config.properties"
 while IFS='=' read -r key value
 do
   key=$(echo $key | tr '.' '_')

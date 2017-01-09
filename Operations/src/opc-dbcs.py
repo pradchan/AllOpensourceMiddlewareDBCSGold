@@ -4,12 +4,13 @@ Created on Jan 9, 2017
 @author: SIVKRISH
 '''
 import sys, os, csv, argparse, getpass, requests, time
-sys.path.append('../')
+sys.path.append('./')
 import opchelper, logging
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", type=str, help="identity domain")
 parser.add_argument("-u", type=str, help="username")
+parser.add_argument("-p", type=str, help="password")
 parser.add_argument("-o", type=str, help="operations {BUILD|DELETE|SCALE|STOP|START|RESTART|VIEW|VIEW_JOB")
 parser.add_argument("-w", type=str, help="web service ref file")
 parser.add_argument("-l", type=str, help="logfile (fullpath)")
@@ -20,11 +21,9 @@ parser.add_argument("-s", type=str, help="compute shape", nargs='?')
 parser.add_argument("-j", type=str, help="job number", nargs='?')
 args = parser.parse_args()
 
-# Prompt for password input and store in a variable
-password = getpass.getpass('Identity Domain Password:')
-
 iden_domain = args.i
 username = args.u
+password = args.p
 operation = args.o
 wsref_file = args.w
 cert_file = args.c
@@ -36,18 +35,14 @@ dbcs_def_file = args.d
 # Set logging and print name of logfile to check
 loglevel="INFO"
 nloglevel =getattr(logging, loglevel, None)
-opc-helper.t_logsetting(log_file, nloglevel)
+opchelper.t_logsetting(log_file, nloglevel)
 print ("\nMain: execution information in logfile %s " %log_file)
 #print ("Main: DBCS Operation Request: %s " %operation)
-opc-helper.t_log('\n')
-opc-helper.t_log('Thread| Main : ' + 'DBCS Operation Request: ' + str(operation))
-
-
+opchelper.t_log('\n')
+opchelper.t_log('Thread| Main : ' + 'DBCS Operation Request: ' + str(operation))
 
 # Read Web Service Reference file into a dictionary
-
 ws_dict = csv.DictReader(open(wsref_file))
-
 
 for row in ws_dict:
     l_ops = row["OPERATION"]
@@ -69,4 +64,4 @@ for row in ws_dict:
                   if job_output['job_status'] in ('Succeeded','Failed'):
                      print "%s: Service status %s" % (time.ctime(time.time()), job_output['status'])
                      break
-               time.sleep(30)
+               time.sleep(120)

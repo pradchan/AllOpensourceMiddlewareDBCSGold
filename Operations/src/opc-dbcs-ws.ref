@@ -1,0 +1,8 @@
+OPERATION,METHOD,REST_ENDPOINT
+VIEW,GET,https://dbcs.emea.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/
+STOP,POST,https://dbcs.emea.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/
+START,POST,https://dbcs.emea.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/
+RESTART,POST,https://dbcs.emea.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/
+SCALE,PUT,https://dbcs.emea.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/
+BUILD,POST,https://dbcs.emea.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/
+DELETE,DELETE,https://dbcs.emea.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/

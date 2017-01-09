@@ -1,0 +1,24 @@
+{
+  "serviceName": "EmployeeDB",
+  "version": "12.2.0.1",
+  "description": "Employee service instance",
+  "edition": "EE",
+  "level": "PAAS",
+  "shape": "oc3",
+  "subscriptionType": "MONTHLY",
+  "vmPublicKeyText": "PUBLIC_KEY",
+  "parameters": [
+    {
+      "type": "db",
+      "usableStorage": "15",
+      "adminPassword": "DBAAS_ADMIN_PASSWORD",
+      "sid": "ORCL",
+      "pdbName": "PDB1",
+      "failoverDatabase": "no",
+      "backupDestination": "BOTH",
+      "cloudStorageContainer": "Storage-IDENTITY_DOMAIN/EmployeeContainer",
+      "cloudStorageUser": "CLOUD_USER",
+      "cloudStoragePwd": "CLOUD_PASSWORD"
+    }
+  ]
+}
