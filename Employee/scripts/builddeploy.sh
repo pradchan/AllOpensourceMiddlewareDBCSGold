@@ -1,0 +1,76 @@
+#!/bin/bash
+config_file="EmployeePHP/scripts/config.properties"
+while IFS='=' read -r key value
+do
+  key=$(echo $key | tr '.' '_')
+  eval "${key}='${value}'"
+done < "$config_file"
+
+cat <<EOF >EmployeePHP/deployment.json
+{
+    "memory": "2G",
+    "instances": "1",
+    "services": [{
+        "identifier": "DBService",
+        "type": "DBAAS",
+        "name": "${DBAAS_NAME}",
+        "username": "${DBAAS_USER_NAME}",
+        "password": "${DBAAS_USER_PASSWORD}"
+    }]
+}
+EOF
+
+cd EmployeePHP
+mkdir -p target
+zip target/Employees-dist.zip *.php *.png manifest.json *.html
+cd ..
+
+echo "Starting the deployment process...."
+
+echo "Creating a storage container..."
+curl -i -X PUT \
+  -u ${cloud_username}:${cloud_password} \
+https://${cloud_domain}.storage.oraclecloud.com/v1/Storage-${cloud_domain}/employees-service
+sleep 15
+
+echo "Uploading the ZIP file in Storage Container..."
+curl -i -X PUT \
+    -u ${cloud_username}:${cloud_password} \
+    https://${cloud_domain}.storage.oraclecloud.com/v1/Storage-${cloud_domain}/employees-service/EmployeesService.zip \
+    -T EmployeePHP/target/Employees-dist.zip
+sleep 15
+
+# See if application already exists
+let httpCode=`curl -i -X GET  \
+  -u ${cloud_username}:${cloud_password} \
+  -H "X-ID-TENANT-NAME:${cloud_domain}" \
+  -H "Content-Type: multipart/form-data" \
+  -sL -w "%{http_code}" \
+  ${cloud_paas_rest_url}/paas/service/apaas/api/v1.1/apps/${cloud_domain}/EmployeesService \
+  -o /dev/null`
+
+# If application exists...
+if [ ${httpCode} -eq 200 ]
+then
+  # Update application
+    echo '\n[info] Updating application...\n'
+    curl -i -X PUT  \
+        -u ${cloud_username}:${cloud_password} \
+        -H "X-ID-TENANT-NAME:${cloud_domain}" \
+        -H "Content-Type: multipart/form-data" \
+        -F archiveURL=employees-service/EmployeesService.zip \
+        ${cloud_paas_rest_url}/paas/service/apaas/api/v1.1/apps/${cloud_domain}/EmployeesService
+	sleep 60
+else
+    echo "Deploying the application to ACCS..."
+    curl -X POST -u ${cloud_username}:${cloud_password} \
+        -H "X-ID-TENANT-NAME:${cloud_domain}" \
+        -H "Content-Type: multipart/form-data" \
+        -F "name=EmployeesService" -F "runtime=php" -F "subscription=Monthly" \
+        -F "deployment=@EmployeePHP/deployment.json" \
+        -F "archiveURL=employees-service/EmployeesService.zip" -F "notes=Employees Service deploying..."  \
+        ${cloud_paas_rest_url}/paas/service/apaas/api/v1.1/apps/${cloud_domain}
+	sleep 60
+fi
+
+echo "Deployment successfully completed!"
