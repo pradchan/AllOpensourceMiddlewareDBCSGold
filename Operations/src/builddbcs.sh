@@ -41,7 +41,7 @@ if [ ${#dbcs_public_ip} -gt 0 ]; then
 	
 	while (true)  
     do
-    	/usr/lib/ssh/ssh-http-proxy-connect -h HTTP_PROXY_HOST -p HTTP_PROXY_PORT -i Operations/cloudnative oracle@140.86.33.222 "exit;"
+    	ssh-http-proxy-connect -h HTTP_PROXY_HOST -p HTTP_PROXY_PORT -i Operations/cloudnative oracle@140.86.33.222 "exit;"
     	ssh -i Operations/cloudnative -o StrictHostKeyChecking=no oracle@${dbcs_public_ip} "exit;"
     	case $? in
         	(0) echo "SSH Port accessible."; break ;;
