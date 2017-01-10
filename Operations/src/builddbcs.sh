@@ -41,7 +41,7 @@ if [ ${#dbcs_public_ip} -gt 0 ]; then
 	
 	while (true)  
     do
-    	ssh -i Operations/cloudnative -tt -o StrictHostKeyChecking=no oracle@${dbcs_public_ip} "exit"
+    	ssh -i Operations/cloudnative -o StrictHostKeyChecking=no oracle@${dbcs_public_ip} "exit;"
     	case $? in
         	(0) echo "SSH Port accessible."; break ;;
         	(*) echo "SSH Port not ready yet, waiting 30 seconds..." ;;
