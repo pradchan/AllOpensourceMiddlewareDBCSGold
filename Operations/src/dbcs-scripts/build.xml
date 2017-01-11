@@ -10,7 +10,7 @@
   </path>
   <target name="deploy">
     <sql driver="oracle.jdbc.OracleDriver" userid="SYS as SYSDBA"  password="Welc0me_2017"
-         url="jdbc:oracle:thin:@140.86.33.222:1521/PDB1.gse00003468.oraclecloud.internal" src="./sys_commands.sql"
+         url="jdbc:oracle:thin:@140.86.32.242:1521/PDB1" src="./sys_commands.sql"
          classpathref="antclasspath" onerror="continue"/>
   </target>
 </project>
