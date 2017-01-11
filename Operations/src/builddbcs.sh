@@ -40,7 +40,7 @@ if [ ${#dbcs_public_ip} -gt 0 ]; then
 	echo "Have valid Public IP ${dbcs_public_ip}."
 	
 	cd Operations/src/dbcs-scripts
-	ant -buildfile build.xml
+	ant deploy -buildfile build.xml
 	if [[ $? -ne 0 ]]
 	then
     	echo "Error in ant build....."
