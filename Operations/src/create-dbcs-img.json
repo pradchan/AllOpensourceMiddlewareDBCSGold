@@ -18,7 +18,8 @@
       "backupDestination": "BOTH",
       "cloudStorageContainer": "Storage-IDENTITY_DOMAIN/EmployeeContainer",
       "cloudStorageUser": "CLOUD_USER",
-      "cloudStoragePwd": "CLOUD_PASSWORD"
+      "cloudStoragePwd": "CLOUD_PASSWORD",
+      "createStorageContainerIfMissing": "true"
     }
   ]
 }

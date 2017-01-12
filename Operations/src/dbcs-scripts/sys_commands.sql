@@ -4,7 +4,7 @@ create user hr_user identified by welcome1
 /
 grant dba to hr_user
 /
-conn hr_user/welcome1
+conn hr_user/welcome1@PDB1
 /
 drop table employees
 /
