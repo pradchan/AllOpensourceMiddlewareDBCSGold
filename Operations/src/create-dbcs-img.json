@@ -19,7 +19,8 @@
       "cloudStorageContainer": "Storage-IDENTITY_DOMAIN/EmployeeContainer",
       "cloudStorageUser": "CLOUD_USER",
       "cloudStoragePwd": "CLOUD_PASSWORD",
-      "createStorageContainerIfMissing": "true"
+      "createStorageContainerIfMissing": "true",
+      "goldenGate": "true"
     }
   ]
 }
