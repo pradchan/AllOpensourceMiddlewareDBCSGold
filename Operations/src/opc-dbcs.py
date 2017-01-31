@@ -43,7 +43,6 @@ opchelper.t_log('Thread| Main : ' + 'DBCS Operation Request: ' + str(operation))
 
 # Read Web Service Reference file into a dictionary
 ws_dict = csv.DictReader(open(wsref_file))
-print (ws_dict)
 
 for row in ws_dict:
     l_ops = row["OPERATION"]
