@@ -258,6 +258,9 @@
             if(data.length==0){
               $("#people").html("No results found...");
             }else{
+
+	          $("#people").html("<div class=\"portrait\"><a href=\"#\" onClick=\"$('#searchText').val(''); $('#searchButton').click();\" class=\"backButton\"><img src=\"back.png\"></a></div>");
+
               data.forEach(function(employee){
                 var item = $(peopleTemplate.render(employee));
                 item.on("click", function(){
