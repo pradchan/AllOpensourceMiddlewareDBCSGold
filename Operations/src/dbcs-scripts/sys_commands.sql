@@ -20,3 +20,5 @@ insert into employees (employee_id, first_name, last_name, email, phone_no, hire
 /
 insert into employees (employee_id, first_name, last_name, email, phone_no, hire_date, salary) values ('105', 'Peter', 'Smith', 'peter.smith@abc.com', '4848048480', to_date('2013-10-01', 'yyyy-mm-dd'), 74000.0)
 /
+exit
+/
