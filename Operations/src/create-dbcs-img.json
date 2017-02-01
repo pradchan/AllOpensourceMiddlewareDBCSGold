@@ -20,7 +20,7 @@
       "cloudStorageUser": "CLOUD_USER",
       "cloudStoragePwd": "CLOUD_PASSWORD",
       "createStorageContainerIfMissing": "true",
-      "goldenGate": "true"
+      "goldenGate": "yes"
     }
   ]
 }
