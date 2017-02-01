@@ -39,7 +39,7 @@ set_exception_handler(function ($e) {
 			$employee = new Employee();
 			$employee->set($params);
 			$employeeStorage->save($employee);
-			$data = '{"status":"OK"' . $employee->employee_id . '}';
+			$data = '{"status":"OK"}';
 			http_response_code(201);
 			break;
 		case 'PUT':

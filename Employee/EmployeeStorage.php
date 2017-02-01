@@ -89,9 +89,9 @@ class EmployeeStorage {
 
 	public function save($employee) {
 		$query = 'INSERT INTO EMPLOYEES (EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NO, HIRE_DATE, SALARY) '
-				. 'VALUES(:employee_id, :first_name, :last_name, :email, :phone_no, TO_DATE(:hire_date, \'yyyy-mm-dd\'), :salary)';
+				. 'VALUES(employee_seq.nextVal, :first_name, :last_name, :email, :phone_no, TO_DATE(:hire_date, \'yyyy-mm-dd\'), :salary)';
 				$stmt = oci_parse($this->conn, $query);
-				oci_bind_by_name($stmt, ':employee_id', $employee->employee_id);
+				//oci_bind_by_name($stmt, ':employee_id', $employee->employee_id);
 				oci_bind_by_name($stmt, ':first_name', $employee->first_name);
 				oci_bind_by_name($stmt, ':last_name', $employee->last_name);
 				oci_bind_by_name($stmt, ':email', $employee->email);
