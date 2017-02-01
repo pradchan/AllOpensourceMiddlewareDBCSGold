@@ -52,8 +52,8 @@ set_exception_handler(function ($e) {
 				$id = $url_pieces[2];
 			}
 			$employee = new Employee();
-			$employee->employee_id = $id;
 			$employee->set($params);
+			$employee->employee_id = $id;
 			$employeeStorage->update($employee);
 			$data = '{"status":"OK"}';
 			http_response_code(200);
