@@ -41,11 +41,11 @@ if [ ${#dbcs_public_ip} -gt 0 ]; then
 	
 	while (true); do exec 3>/dev/tcp/${dbcs_public_ip}/22; if [ $? -eq 0 ]; then echo "SSH up..." ; break ; else echo "SSH still down..." ; sleep 30 ; fi done
 
-	sed -i 's/DBAAS_ADMIN_PASSWORD/'$DBAAS_ADMIN_PASSWORD'/' Operations/src/dbcs-scripts/create-user-dbcs.sh
-	sed -i 's/DBAAS_USER_NAME/'$DBAAS_USER_NAME'/' Operations/src/dbcs-scripts/create-user-dbcs.sh
-	sed -i 's/DBAAS_USER_PASSWORD/'$DBAAS_USER_PASSWORD'/' Operations/src/dbcs-scripts/create-user-dbcs.sh
+	sed -i 's/DBAAS_ADMIN_PASSWORD/'$DBAAS_ADMIN_PASSWORD'/' Employee/dbcs-scripts/create-user-dbcs.sh
+	sed -i 's/DBAAS_USER_NAME/'$DBAAS_USER_NAME'/' Employee/dbcs-scripts/create-user-dbcs.sh
+	sed -i 's/DBAAS_USER_PASSWORD/'$DBAAS_USER_PASSWORD'/' Employee/dbcs-scripts/create-user-dbcs.sh
 	
-	scp -i Operations/cloudnative -o StrictHostKeyChecking=no -r Operations/src/dbcs-scripts/  oracle@${dbcs_public_ip}:/tmp
+	scp -i Operations/cloudnative -o StrictHostKeyChecking=no -r Employee/dbcs-scripts/  oracle@${dbcs_public_ip}:/tmp
 	ssh -i Operations/cloudnative -tt -o StrictHostKeyChecking=no oracle@${dbcs_public_ip} "cd /tmp/dbcs-scripts; chmod +x create-user-dbcs.sh; ./create-user-dbcs.sh; exit;"
 else
 	echo "Public IP is not valid."
