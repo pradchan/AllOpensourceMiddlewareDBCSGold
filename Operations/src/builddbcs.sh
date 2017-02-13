@@ -1,10 +1,8 @@
 #!/bin/bash
-config_file="Operations/config.properties"
-while IFS='=' read -r key value
-do
-  key=$(echo $key | tr '.' '_')
-  eval "${key}='${value}'"
-done < "$config_file"
+cloud_domain=$1;
+ACCS_DATACENTER=$2;
+cloud_username=$3;
+cloud_password=$4;
 
 if [ ${ACCS_DATACENTER} != "em2" ]; then
 	sed -i 's/dbcs.emea.oraclecloud.com/dbaas.oraclecloud.com/g' Operations/src/opc-dbcs-ws.ref
@@ -21,7 +19,7 @@ if test "${dbviewoutput#*$dbname}" != "$dbviewoutput"
     else
         # $dbname is not in $dbviewoutput
 		echo "Database ${dbname} does not exists. Creating new instance..."
-		publickey=`cat Operations/cloudnative.pub`
+		publickey=`cat Operations/labkey.pub`
 		
 		sed -i 's/IDENTITY_DOMAIN/'$cloud_domain'/' Operations/src/create-dbcs-img.json
 		sed -i 's/CLOUD_USER/'$cloud_username'/' Operations/src/create-dbcs-img.json
@@ -45,8 +43,8 @@ if [ ${#dbcs_public_ip} -gt 0 ]; then
 	sed -i 's/DBAAS_USER_NAME/'$DBAAS_USER_NAME'/' Employee/dbcs-scripts/create-user-dbcs.sh
 	sed -i 's/DBAAS_USER_PASSWORD/'$DBAAS_USER_PASSWORD'/' Employee/dbcs-scripts/create-user-dbcs.sh
 	
-	scp -i Operations/cloudnative -o StrictHostKeyChecking=no -r Employee/dbcs-scripts/  oracle@${dbcs_public_ip}:/tmp
-	ssh -i Operations/cloudnative -tt -o StrictHostKeyChecking=no oracle@${dbcs_public_ip} "cd /tmp/dbcs-scripts; chmod +x create-user-dbcs.sh; ./create-user-dbcs.sh; exit;"
+	scp -i Operations/labkey -o StrictHostKeyChecking=no -r Employee/dbcs-scripts/  oracle@${dbcs_public_ip}:/tmp
+	ssh -i Operations/labkey -o StrictHostKeyChecking=no oracle@${dbcs_public_ip} "cd /tmp/dbcs-scripts; chmod +x create-user-dbcs.sh; ./create-user-dbcs.sh; exit;"
 else
 	echo "Public IP is not valid."
 fi

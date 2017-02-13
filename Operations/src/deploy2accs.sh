@@ -1,10 +1,15 @@
 #!/bin/bash
-config_file="Operations/config.properties"
-while IFS='=' read -r key value
-do
-  key=$(echo $key | tr '.' '_')
-  eval "${key}='${value}'"
-done < "$config_file"
+#config_file="Operations/config.properties"
+#while IFS='=' read -r key value
+#do
+  #key=$(echo $key | tr '.' '_')
+  #eval "${key}='${value}'"
+#done < "$config_file"
+cloud_domain=$1;
+cloud_zone=$2;
+cloud_username=$3;
+cloud_password=$4;
+cloud_paas_rest_url=https://apaas.${cloud_zone}.oraclecloud.com
 
 cat <<EOF >Employee/deployment.json
 {
@@ -13,9 +18,9 @@ cat <<EOF >Employee/deployment.json
     "services": [{
         "identifier": "DBService",
         "type": "DBAAS",
-        "name": "${DBAAS_NAME}",
-        "username": "${DBAAS_USER_NAME}",
-        "password": "${DBAAS_USER_PASSWORD}"
+        "name": "EmployeeDB",
+        "username": "hr_user",
+        "password": "welcome1"
     }]
 }
 EOF

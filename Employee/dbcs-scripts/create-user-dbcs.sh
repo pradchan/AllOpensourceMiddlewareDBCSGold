@@ -1,1 +1,1 @@
-sqlplus sys/DBAAS_ADMIN_PASSWORD@PDB1 as sysdba @sys_commands.sql
+sqlplus sys/Welc0me_2017@PDB1 as sysdba @create-user-dbcs.sql
