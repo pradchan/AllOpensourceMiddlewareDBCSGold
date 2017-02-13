@@ -3,6 +3,7 @@ cloud_domain=$1;
 ACCS_DATACENTER=$2;
 cloud_username=$3;
 cloud_password=$4;
+DBAAS_ADMIN_PASSWORD='Welc0me_2017';
 
 if [ ${ACCS_DATACENTER} != "em2" ]; then
 	sed -i 's/dbcs.emea.oraclecloud.com/dbaas.oraclecloud.com/g' Operations/src/opc-dbcs-ws.ref
@@ -39,10 +40,6 @@ if [ ${#dbcs_public_ip} -gt 0 ]; then
 	
 	while (true); do exec 3>/dev/tcp/${dbcs_public_ip}/22; if [ $? -eq 0 ]; then echo "SSH up..." ; break ; else echo "SSH still down..." ; sleep 30 ; fi done
 
-	sed -i 's/DBAAS_ADMIN_PASSWORD/'$DBAAS_ADMIN_PASSWORD'/' Employee/dbcs-scripts/create-user-dbcs.sh
-	sed -i 's/DBAAS_USER_NAME/'$DBAAS_USER_NAME'/' Employee/dbcs-scripts/create-user-dbcs.sh
-	sed -i 's/DBAAS_USER_PASSWORD/'$DBAAS_USER_PASSWORD'/' Employee/dbcs-scripts/create-user-dbcs.sh
-	
 	scp -i Operations/labkey -o StrictHostKeyChecking=no -r Employee/dbcs-scripts/  oracle@${dbcs_public_ip}:/tmp
 	ssh -i Operations/labkey -o StrictHostKeyChecking=no oracle@${dbcs_public_ip} "cd /tmp/dbcs-scripts; chmod +x create-user-dbcs.sh; ./create-user-dbcs.sh; exit;"
 else
