@@ -47,7 +47,7 @@ class EmployeeStorage {
 		}else if ($criteria=='email'){
 			$filter = 'EMAIL';
 		}
-		$value = '%' . $value . '%';
+		$value = $value . '%';
 		$query = 'SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NO, TO_CHAR(HIRE_DATE, \'YYYY-MM-DD\') AS HIRE_DATE, SALARY FROM EMPLOYEES WHERE ' . $filter . ' LIKE :value';
 		$stmt = oci_parse($this->conn, $query);
 		oci_bind_by_name($stmt, ':value', $value, -1);
