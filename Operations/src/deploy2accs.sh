@@ -10,8 +10,12 @@ cloud_zone=$2;
 cloud_username=$3;
 cloud_password=$4;
 
-if [ "${cloud_zone}" == "em2" ]; then
-  cloud_zone='europe';
+if [[ $cloud_zone == em* ]]; then
+  cloud_zone="europe";
+else
+    if [[ $cloud_zone == us* ]]; then
+        cloud_zone="us";
+    fi
 fi
 
 cloud_paas_rest_url=https://apaas.${cloud_zone}.oraclecloud.com

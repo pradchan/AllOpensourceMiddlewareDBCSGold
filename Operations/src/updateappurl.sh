@@ -2,9 +2,5 @@
 cloud_domain=$1;
 ACCS_DATACENTER=$2;
 
-if [ "${ACCS_DATACENTER}" == "em2" ]; then
-  ACCS_DATACENTER='em2';
-fi
-
-sed -i 's/IDENTITY_DOMAIN/'$cloud_domain'/' Employee/index.html
-sed -i 's/DATACENTER/'$ACCS_DATACENTER'/' Employee/index.html
+ms_url="https://employeesservice-${cloud_domain}.apaas.${ACCS_DATACENTER}.oraclecloud.com/api.php/"
+sed -i 's#MICROSERVICE_URL#'${ms_url}'#' Employee/index.html
