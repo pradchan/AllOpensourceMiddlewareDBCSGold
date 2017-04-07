@@ -138,7 +138,7 @@
                 $("#detail").html("DELETING...");
                 $( this ).dialog( "close" );
                 $.ajax({
-                  url:server +"employees/"+employee.employee_id,
+                  url:server +"/employees/"+employee.employee_id,
                   method:"DELETE"
                   }).done(function(data){
                     $("#detail").hide();
@@ -221,7 +221,7 @@
                 $("#detail").html("ADDING...");
                 $( this ).dialog( "close" );
                 $.ajax({
-                  url:server +"employees",
+                  url:server +"/employees",
                   method:"POST",
                   data:JSON.stringify(addEmployee),
                   contentType: 'application/json',
